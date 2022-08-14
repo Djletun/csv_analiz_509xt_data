@@ -4,6 +4,7 @@ import numpy as np
 import csv
 import os
 import sys
+import pyexcel
 
 
 orig_stdout = sys.stdout
@@ -66,3 +67,20 @@ file_log.close()
 
 #print(data[:][:, 1])
 #print(data[:][:, 0])
+
+#from openpyxl import Workbook
+#
+#reload(sys)
+#sys.setdefaultencoding('utf8')
+#
+#if __name__ == '__main__':
+#    workbook = Workbook()
+#    worksheet = workbook.active
+#    with open('input.csv', 'r') as f:
+#        reader = csv.reader(f)
+#        for r, row in enumerate(reader):
+#            for c, col in enumerate(row):
+#                for idx, val in enumerate(col.split(',')):
+#                    cell = worksheet.cell(row=r+1, column=c+1)
+#                    cell.value = val
+#    workbook.save('output.xlsx')
