@@ -62,7 +62,7 @@ for file_name in csv_files:
                     if not (row['Serial Nb'] in cx_sn_control):
                         cx_sn_control.add(row['Serial Nb'])
                         for indx in keys_cx:
-                            cx.append(tuple(row[indx]))
+                            cx.append(''.join(tuple(row[indx])))
                         CX_508.append(cx)
                         # if row['Box Type']=='SCI_508':
                     # print('SCI_508')
@@ -73,7 +73,7 @@ for file_name in csv_files:
                 if not (row['Serial Nb'] in fdu_sn_control):
                     fdu_sn_control.add(row['Serial Nb'])
                     for indx in keys_fdu:
-                        fdu.append(tuple(row[indx]))
+                        fdu.append(''.join(tuple(row[indx])))
                     Fdu_508.append(fdu)
             # print(row['Box Type'] + ' ' + str(row['Serial Nb']))
         # count += 1
@@ -88,7 +88,7 @@ print('total nb cx508', len(cx_sn_control))
 print('total nb fdu508', len(fdu_sn_control))
 
 # print(*dat)
-my_dest_file_name = dir_path + "result.xls"
+my_dest_file_name = dir_path + "result.xlsx"
 pyexcel.save_book_as(dest_file_name=my_dest_file_name, bookdict=dat)
 # print(count)
 
