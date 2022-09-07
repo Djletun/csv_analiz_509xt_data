@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # import matplotlib.pyplot as plt
 # import numpy as np
+import datetime
 import csv
 import os
 import sys
 import pyexcel
 
 # from openpyxl import Workbook
-
+start_time = datetime.datetime.now()
+print(start_time)
 if os.name == 'nt':
     symbol = '\\'
 if os.name == 'posix':
@@ -40,7 +42,8 @@ CX_508.append(keys_cx)
 # начальные параметры для отображения данных о cx508
 fdu_sn_control = set()
 keys_fdu = (
-'Type', 'Serial Nb', 'Auto Test', 'Noise (μV)', 'Distortion (dB)', 'Phase(μs)', 'Gain (%)', 'CMRR (dB)', 'Version')
+    'Type', 'Serial Nb', 'Auto Test', 'Noise (μV)', 'Distortion (dB)', 'Phase(μs)', 'Gain (%)', 'CMRR (dB)', 'Version',
+    'Last Test Date', 'Cx Master')
 Fdu_508 = list()
 Fdu_508.append(keys_fdu)
 # print('keys fdu ', keys_fdu[0])
@@ -62,7 +65,9 @@ for file_name in csv_files:
                     if not (row['Serial Nb'] in cx_sn_control):
                         cx_sn_control.add(row['Serial Nb'])
                         for indx in keys_cx:
-                            cx.append(''.join(tuple(row[indx])))
+                            # cx.append(''.join(tuple(row[indx])))
+                            t = (row[indx],)
+                            cx.append(t[0])
                         CX_508.append(cx)
                         # if row['Box Type']=='SCI_508':
                     # print('SCI_508')
@@ -73,7 +78,9 @@ for file_name in csv_files:
                 if not (row['Serial Nb'] in fdu_sn_control):
                     fdu_sn_control.add(row['Serial Nb'])
                     for indx in keys_fdu:
-                        fdu.append(''.join(tuple(row[indx])))
+                        # fdu.append(''.join(tuple(row[indx])))
+                        t = (row[indx],)
+                        fdu.append(t[0])
                     Fdu_508.append(fdu)
             # print(row['Box Type'] + ' ' + str(row['Serial Nb']))
         # count += 1
@@ -88,8 +95,8 @@ print('total nb cx508', len(cx_sn_control))
 print('total nb fdu508', len(fdu_sn_control))
 
 # print(*dat)
-my_dest_file_name = dir_path + "result.xlsx"
-pyexcel.save_book_as(dest_file_name=my_dest_file_name, bookdict=dat)
+my_file_name = dir_path + "result.xlsx"
+pyexcel.save_book_as(dest_file_name=my_file_name, bookdict=dat)
 # print(count)
 
 file_log.close()
@@ -114,3 +121,7 @@ file_log.close()
 #
 # reload(sys)
 # sys.setdefaultencoding('utf8')
+end_time = datetime.datetime.now()
+sys.stdout = orig_stdout
+print(end_time)
+print('delta time = ', end_time - start_time)
